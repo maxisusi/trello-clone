@@ -3,7 +3,6 @@ import "./SelectLabels.scss";
 import AddIcon from "@material-ui/icons/Add";
 import { SelectedCardContext } from "./CardElementProvider";
 import CheckIcon from "@material-ui/icons/Check";
-import { colors } from "@material-ui/core";
 
 const SelectLabels = () => {
   const [selectedCard, setSelectedCard] = useContext(SelectedCardContext);
@@ -34,8 +33,13 @@ const SelectLabels = () => {
       color: "#0179bf",
       activated: false,
     },
+    {
+        color: "#334663",
+        activated: false,
+      },
   ]);
 
+  //Check if the selected card has the same color as the label list for checkmark
   useEffect(() => {
     for (let i = 0; i < colorLabel.length; i++) {
       for (let y = 0; y < selectedCard.labels.length; y++) {
@@ -65,16 +69,19 @@ const SelectLabels = () => {
             <AddIcon />
           </div>
 
+          {/* Label list menu */}
           {displayLabels ? (
             <div className="selectLabels__labelList">
               <h4>Labels</h4>
               <hr />
+
               {colorLabel.map((elem) => (
                 <div
                   className="selectedLabels__labelInList"
                   style={{ backgroundColor: elem.color }}
                   key={elem.color}
                 >
+                  {/* Check if label is activated or not */}
                   {elem.activated === true ? (
                     <CheckIcon className="selectedLabels__check" />
                   ) : null}

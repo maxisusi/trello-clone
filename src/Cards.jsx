@@ -24,7 +24,7 @@ const Cards = () => {
     const addTo = {
       id: cardElement.length,
       title: cardInput,
-      labels: ["#EBECF0"],
+      labels: ["#334663"],
       description: ''
     };
 
