@@ -3,6 +3,7 @@ import "./SelectLabels.scss";
 import AddIcon from "@material-ui/icons/Add";
 import { SelectedCardContext } from "./CardElementProvider";
 import CheckIcon from "@material-ui/icons/Check";
+import { colors } from "@material-ui/core";
 
 const SelectLabels = () => {
   const [selectedCard, setSelectedCard] = useContext(SelectedCardContext);
@@ -11,7 +12,7 @@ const SelectLabels = () => {
   const [colorLabel, setColorLabel] = useState([
     {
       color: "#60bd4e",
-      activated: true,
+      activated: false,
     },
     {
       color: "#f2d600",
@@ -23,7 +24,7 @@ const SelectLabels = () => {
     },
     {
       color: "#eb5b46",
-      activated: true,
+      activated: false,
     },
     {
       color: "#c377e0",
@@ -36,9 +37,13 @@ const SelectLabels = () => {
   ]);
 
   useEffect(() => {
-    colorLabel.forEach(element => {
-        console.log(element.color)
-    })
+    for (let i = 0; i < colorLabel.length; i++) {
+      for (let y = 0; y < selectedCard.labels.length; y++) {
+        if (selectedCard.labels[y] === colorLabel[i].color) {
+          setColorLabel([...colorLabel], (colorLabel[i].activated = true));
+        }
+      }
+    }
   }, [selectedCard]);
 
   return (
@@ -70,7 +75,6 @@ const SelectLabels = () => {
                   style={{ backgroundColor: elem.color }}
                   key={elem.color}
                 >
-                  {console.log(elem.activated === true)}
                   {elem.activated === true ? (
                     <CheckIcon className="selectedLabels__check" />
                   ) : null}
