@@ -1,0 +1,29 @@
+.selectLabels {
+  width: 100%;
+  margin-bottom: 50px;
+}
+
+.selectLabels__labels {
+  display: flex;
+  margin-top: 10px;
+
+  .selectLabels__label {
+    width: 80px;
+    height: 30px;
+    background-color: red;
+    border-radius: 5px;
+    margin-right: 5px;
+
+  }
+
+  .selectLabels__addLabel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
+    background-color: lightgray;
+  }
+}

@@ -7,7 +7,7 @@ import Panel from "./Panel";
 function App() {
   return (
     <div className="App">
-      <CardElementProvider>
+      <CardElementProvider >
         <Panel></Panel>
         <Cards></Cards>
       </CardElementProvider>

@@ -5,9 +5,13 @@ import {
   DisplayPanelContext,
   SelectedCardContext,
 } from "./CardElementProvider";
+
 import ViewAgendaIcon from "@material-ui/icons/ViewAgenda";
 import ClearIcon from "@material-ui/icons/Clear";
-import SubjectIcon from "@material-ui/icons/Subject";
+import SubjectIcon from '@material-ui/icons/Subject';
+import SelectLabels from "./SelectLabels";
+
+
 
 const Panel = () => {
   const [displayPanel, setDisplayPanel] = useContext(DisplayPanelContext);
@@ -48,6 +52,7 @@ const Panel = () => {
             />
           </div>
 
+          <SelectLabels></SelectLabels>
           {/* Description */}
 
           <div className="panel__description">
