@@ -21,19 +21,19 @@ export const CardElementProvider = () => {
     {
       id: 0,
       title: "Have fun",
-      labels: ["#F69F1C", "#61BD50", "#2F79BF"],
+      labels: ["#ff9e19", "#60bd4e", "#0179bf"],
       description: "It's important to have fun",
     },
     {
       id: 1,
       title: "Test my limits",
-      labels: ["#F69F1C", "#61BD50"],
+      labels: ["#ff9e19", "#60bd4e"],
       description: "You should always push the envelop",
     },
     {
       id: 2,
       title: "Say hello to my mum",
-      labels: ["#F69F1C", "#61BD50", "#2F79BF"],
+      labels: ["#ff9e19", "#60bd4e", "#0179bf"],
       description: "Because you love your mum",
     },
   ]);
