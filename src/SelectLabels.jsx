@@ -2,7 +2,8 @@ import React, { useContext, useState, useEffect } from "react";
 import "./SelectLabels.scss";
 import AddIcon from "@material-ui/icons/Add";
 import { SelectedCardContext } from "./CardElementProvider";
-import CheckIcon from "@material-ui/icons/Check";
+
+import Label from "./Label";
 
 const SelectLabels = () => {
   const [selectedCard, setSelectedCard] = useContext(SelectedCardContext);
@@ -10,34 +11,51 @@ const SelectLabels = () => {
 
   const [colorLabel, setColorLabel] = useState([
     {
+      id: 0,
       color: "#60bd4e",
       activated: false,
     },
     {
+      id: 1,
       color: "#f2d600",
       activated: false,
     },
     {
+      id: 2,
       color: "#ff9e19",
       activated: false,
     },
     {
+      id: 3,
       color: "#eb5b46",
       activated: false,
     },
     {
+      id: 4,
       color: "#c377e0",
       activated: false,
     },
     {
+      id: 5,
       color: "#0179bf",
       activated: false,
     },
     {
-        color: "#334663",
-        activated: false,
-      },
+      id: 6,
+      color: "#334663",
+      activated: false,
+    },
   ]);
+
+  const activateLabel = (id) => {
+    if (colorLabel[id].activated === false) {
+      setColorLabel([...colorLabel], (colorLabel[id].activated = true));
+      selectedCard.labels.push(colorLabel[id].color);
+    } else {
+      setColorLabel([...colorLabel], (colorLabel[id].activated = false));
+      selectedCard.labels.splice(selectedCard.labels.indexOf(colorLabel[id].color), 1);
+    }
+  };
 
   //Check if the selected card has the same color as the label list for checkmark
   useEffect(() => {
@@ -76,16 +94,13 @@ const SelectLabels = () => {
               <hr />
 
               {colorLabel.map((elem) => (
-                <div
-                  className="selectedLabels__labelInList"
-                  style={{ backgroundColor: elem.color }}
-                  key={elem.color}
-                >
-                  {/* Check if label is activated or not */}
-                  {elem.activated === true ? (
-                    <CheckIcon className="selectedLabels__check" />
-                  ) : null}
-                </div>
+                <Label
+                  color={elem.color}
+                  activated={elem.activated}
+                  id={elem.id}
+                  key={elem.id}
+                  activatedCard={activateLabel}
+                ></Label>
               ))}
             </div>
           ) : null}
