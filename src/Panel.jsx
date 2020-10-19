@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./Panels.scss";
 import {
   CardElementContext,
@@ -8,23 +8,31 @@ import {
 
 import ViewAgendaIcon from "@material-ui/icons/ViewAgenda";
 import ClearIcon from "@material-ui/icons/Clear";
-import SubjectIcon from '@material-ui/icons/Subject';
+import SubjectIcon from "@material-ui/icons/Subject";
 import SelectLabels from "./SelectLabels";
-
-
 
 const Panel = () => {
   const [displayPanel, setDisplayPanel] = useContext(DisplayPanelContext);
   const [cardElement, setCardElement] = useContext(CardElementContext);
   const [selectedCard, setSelectedCard] = useContext(SelectedCardContext);
+  const [cardId, setCardId] = useState(null);
+
+  useEffect(() => {
+    for (let i = 0; i < cardElement.length; i++) {
+      if (cardElement[i].id === selectedCard.id) {
+        setCardId(i);
+        return;
+      }
+    }
+  }, [selectedCard]);
 
   const changeDescription = (e) => {
-    setCardElement([...cardElement], cardElement[selectedCard.id].description = e)
-  }
+    setCardElement([...cardElement], (cardElement[cardId].description = e));
+  };
 
   const changeTitle = (e) => {
-    setCardElement([...cardElement], cardElement[selectedCard.id].title = e)
-  }
+    setCardElement([...cardElement], (cardElement[cardId].title = e));
+  };
 
   if (displayPanel) {
     return (
@@ -61,8 +69,11 @@ const Panel = () => {
               <h3>Description</h3>
             </div>
 
-            <textarea className="panel__textDescription" defaultValue={selectedCard.description} onChange={(e) => changeDescription(e.target.value)}>
-            </textarea>
+            <textarea
+              className="panel__textDescription"
+              defaultValue={selectedCard.description}
+              onChange={(e) => changeDescription(e.target.value)}
+            ></textarea>
           </div>
         </div>
       </div>

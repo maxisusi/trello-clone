@@ -3,7 +3,11 @@ import "./Cards.scss";
 
 import CardsElement from "./CardsElement";
 import Panel from "./Panel";
-import {CardElementContext, DisplayPanelContext, SelectedCardContext} from './CardElementProvider'
+import {
+  CardElementContext,
+  DisplayPanelContext,
+  SelectedCardContext,
+} from "./CardElementProvider";
 
 import IconButton from "@material-ui/core/IconButton";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
@@ -19,13 +23,17 @@ const Cards = () => {
   const [displayPanel, setDisplayPanel] = useContext(DisplayPanelContext);
   const [selectedCard, setSelectedCard] = useContext(SelectedCardContext);
 
+  const ID = function () {
+    return "_" + Math.random().toString(36).substr(2, 9);
+  };
+
   const addCard = (e) => {
     setCreateCard(false);
     const addTo = {
-      id: cardElement.length,
+      id: ID(),
       title: cardInput,
       labels: ["#334663"],
-      description: ''
+      description: "",
     };
 
     const newCard = [...cardElement, addTo];
@@ -39,65 +47,70 @@ const Cards = () => {
       id: id,
       title: title,
       labels: labels,
-      description: description
-    })
+      description: description,
+    });
   };
 
-    return (
-      <div className="cards">
-        <div className="cards__header">
-          <input className="cards__title" defaultValue={cardTitle}></input>
-          <div className="cards__moreButton">
-            <MoreHorizIcon />
-          </div>
+  const deleteCard = (id) => {
+    console.log("deleting card id:", id);
+    setCardElement(cardElement.filter((item) => item.id !== id));
+  };
+
+  return (
+    <div className="cards">
+      <div className="cards__header">
+        <input className="cards__title" defaultValue={cardTitle}></input>
+        <div className="cards__moreButton">
+          <MoreHorizIcon />
         </div>
-
-        {/* All the displayed card */}
-        <div className="cards__wrapper">
-          {cardElement?.map((element) => (
-            <CardsElement
-              key={element.id}
-              id={element.id}
-              title={element.title}
-              labels={element.labels}
-              description={element.description}
-              displayCard={displayCard}
-            />
-          ))}
-        </div>
-
-        {/* Create card module */}
-
-        {createCard === true ? (
-          <form onSubmit={(e) => addCard(e)}>
-            <input
-              className="cards__textInput"
-              placeholder="Fill up your card"
-              onChange={(e) => {
-                setCardInput(e.target.value);
-              }}
-            ></input>
-
-            <div className="cards__cardValidation">
-              <button onClick={() => addCard()}>Save</button>
-              <ClearIcon
-                className="cards__cross"
-                onClick={() => setCreateCard(!createCard)}
-              ></ClearIcon>
-            </div>
-          </form>
-        ) : (
-          <div
-            className="cards__addCard"
-            onClick={() => setCreateCard(!createCard)}
-          >
-            <AddIcon />
-            <p>Add another card</p>
-          </div>
-        )}
       </div>
-    );
-  
+
+      {/* All the displayed card */}
+      <div className="cards__wrapper">
+        {cardElement?.map((element) => (
+          <CardsElement
+            key={element.id}
+            id={element.id}
+            title={element.title}
+            labels={element.labels}
+            description={element.description}
+            displayCard={displayCard}
+            deleteCard={deleteCard}
+          />
+        ))}
+      </div>
+
+      {/* Create card module */}
+
+      {createCard === true ? (
+        <form onSubmit={(e) => addCard(e)}>
+          <input
+            className="cards__textInput"
+            placeholder="Fill up your card"
+            onChange={(e) => {
+              setCardInput(e.target.value);
+            }}
+          ></input>
+
+          <div className="cards__cardValidation">
+            <button onClick={() => addCard()}>Save</button>
+            <ClearIcon
+              className="cards__cross"
+              onClick={() => setCreateCard(!createCard)}
+            ></ClearIcon>
+          </div>
+        </form>
+      ) : (
+        <div
+          className="cards__addCard"
+          onClick={() => setCreateCard(!createCard)}
+        >
+          <AddIcon />
+          <p>Add another card</p>
+        </div>
+      )}
+    </div>
+  );
 };
 
 export default Cards;

@@ -16,22 +16,25 @@ export const CardElementProvider = () => {
     description: ''
   });
 
+  const ID = function () {
+    return "_" + Math.random().toString(36).substr(2, 9);
+  };
 
   const [cardElement, setCardElement] = useState([
     {
-      id: 0,
+      id: ID(),
       title: "Have fun",
       labels: ["#ff9e19", "#60bd4e", "#0179bf"],
       description: "It's important to have fun",
     },
     {
-      id: 1,
+      id: ID(),
       title: "Test my limits",
       labels: ["#ff9e19", "#60bd4e"],
       description: "You should always push the envelop",
     },
     {
-      id: 2,
+      id: ID(),
       title: "Say hello to my mum",
       labels: ["#ff9e19", "#60bd4e", "#0179bf"],
       description: "Because you love your mum",

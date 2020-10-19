@@ -10,7 +10,6 @@
   .selectLabels__label {
     width: 80px;
     height: 30px;
-    background-color: red;
     border-radius: 5px;
     margin-right: 5px;
   }
@@ -23,7 +22,11 @@
     width: 30px;
     height: 30px;
     border-radius: 5px;
-    background-color: lightgray;
+    background-color: #E3E6EA;
+    
+    &:hover {
+      background-color: lighten($color: lightgrey, $amount: 3)
+    }
   }
 }
 
@@ -38,7 +41,7 @@
     padding: 1em;
 
     h4 {
-      margin-bottom: 20px;
+      margin-bottom: 15px;
       font-weight: normal;
     }
 
@@ -55,6 +58,7 @@
       border-radius: 5px;
       cursor: pointer;
       margin-bottom: 10px;
+
 
       .selectedLabels__check {
           color: white;

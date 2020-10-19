@@ -74,6 +74,7 @@ const SelectLabels = () => {
       <div className="selectLabels__labels">
         {selectedCard.labels.map((labels) => (
           <div
+            key={labels + labels.length}
             className="selectLabels__label"
             style={{ backgroundColor: labels }}
           ></div>
