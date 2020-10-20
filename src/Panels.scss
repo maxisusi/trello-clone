@@ -17,9 +17,9 @@
 
 .panel__form {
   padding: 2em;
-  
+
   width: 35vw;
-  background-color: #EBECF0;
+  background-color: #ebecf0;
   border-radius: 5px;
   position: relative;
   z-index: 51;
@@ -28,7 +28,6 @@
 .panel__icon {
   margin-right: 20px;
 }
-
 
 .panel__header {
   display: flex;
@@ -43,7 +42,7 @@
     width: 80%;
     font-size: 18px;
     font-weight: bold;
-    
+
     &:focus {
       background-color: white;
     }
@@ -52,7 +51,6 @@
   .panel__headerLeft {
     display: flex;
     width: 100%;
-
   }
 
   .panel__close {
@@ -60,27 +58,50 @@
   }
 }
 
+
 .panel__descriptionHeader {
   display: flex;
   margin-bottom: 20px;
-
 }
 
-
-
 .panel__textDescription {
-  resize: inherit;
+  resize: none;
   font-family: inherit;
-  width: 80%;
+  width: 90%;
   height: 100%;
   border: none;
   font-size: 16px;
-  background-color: #E3E6EA;
-  padding: .9em;
+  background-color: #e3e6ea;
+  padding: 0.9em;
   border-radius: 10px;
+  margin-bottom: 45px;
 
   &:focus {
-    background-color:white;
+    background-color: white;
   }
 }
 
+.panel__toDo {
+
+  .panel__checklistAddElement {
+    margin-top: 20px;
+    .panel__checklistMenu {
+      width: 100%;
+      .panel__checklistFill {
+        width: 100%;
+        margin-bottom: 20px;
+      }
+      .panel__checklistConfirmation {
+        .panel__checklistConfirmationSave {
+          background-color: #60bd4e !important;
+          color: white !important;
+          margin-right: 15px;
+        }
+
+        .panel__checklistConfirmationUnsave {
+          color: grey;
+        }
+      }
+    }
+  }
+}

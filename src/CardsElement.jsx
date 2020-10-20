@@ -11,6 +11,7 @@ const CardsElement = ({
   title,
   labels,
   displayCard,
+  checklist,
   description,
   deleteCard,
 }) => {
@@ -31,7 +32,7 @@ const CardsElement = ({
   const openMenu = () => {
 
   if (!anchorEl) {
-      displayCard(id, title, labels, description);
+      displayCard(id, title, labels, description, checklist);
     }
 
   }
@@ -40,7 +41,6 @@ const CardsElement = ({
 
 
     <div className="cards__element"  ref={cardElement} onClick={openMenu}>
-      <div className="cards_block"></div>
       <div className="cards__labels">
         {labels?.map((colors) => (
           <div>
@@ -56,6 +56,7 @@ const CardsElement = ({
       <p>{title}</p>
       <IconButton
 
+        size={'small'}
         className="cards__pen"
         aria-controls="fade-menu"
         aria-haspopup="true"

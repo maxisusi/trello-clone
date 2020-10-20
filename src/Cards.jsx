@@ -10,6 +10,7 @@ import {
 } from "./CardElementProvider";
 
 import IconButton from "@material-ui/core/IconButton";
+import Button from '@material-ui/core/Button';
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import AddIcon from "@material-ui/icons/Add";
 import ClearIcon from "@material-ui/icons/Clear";
@@ -34,6 +35,7 @@ const Cards = () => {
       title: cardInput,
       labels: ["#334663"],
       description: "",
+      checklist: []
     };
 
     const newCard = [...cardElement, addTo];
@@ -41,13 +43,14 @@ const Cards = () => {
     setCardInput("");
   };
 
-  const displayCard = (id, title, labels, description) => {
+  const displayCard = (id, title, labels, description, checklist) => {
     setDisplayPanel(true);
     setSelectedCard({
       id: id,
       title: title,
       labels: labels,
       description: description,
+      checklist: checklist,
     });
   };
 
@@ -74,6 +77,7 @@ const Cards = () => {
             title={element.title}
             labels={element.labels}
             description={element.description}
+            checklist={element.checklist}
             displayCard={displayCard}
             deleteCard={deleteCard}
           />
@@ -93,11 +97,14 @@ const Cards = () => {
           ></input>
 
           <div className="cards__cardValidation">
-            <button onClick={() => addCard()}>Save</button>
+            <Button className="cards_save" variant="contained" onClick={() => addCard()}>Save</Button>
+            <IconButton>
             <ClearIcon
               className="cards__cross"
               onClick={() => setCreateCard(!createCard)}
             ></ClearIcon>
+            </IconButton>
+            
           </div>
         </form>
       ) : (

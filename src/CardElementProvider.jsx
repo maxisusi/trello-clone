@@ -13,7 +13,8 @@ export const CardElementProvider = () => {
     id: '',
     title: '',
     labels: null,
-    description: ''
+    description: '',
+    checklist: null,
   });
 
   const ID = function () {
@@ -26,18 +27,59 @@ export const CardElementProvider = () => {
       title: "Have fun",
       labels: ["#ff9e19", "#60bd4e", "#0179bf"],
       description: "It's important to have fun",
+      checklist : [ 
+      {
+        title: "Create datasheet",
+        done: false
+      },
+      {
+        title: "Make sure you cook enough pasta",
+        done: true
+      },
+      {
+        title: "Have sex as much as possible",
+        done: true
+      },
+    ]
+      
     },
     {
       id: ID(),
       title: "Test my limits",
       labels: ["#ff9e19", "#60bd4e"],
       description: "You should always push the envelop",
+      checklist : [ 
+        {
+          title: "Drink coffea",
+          done: true
+        },
+        {
+          title: "Buy a new lambo",
+          done: false
+        },
+
+      ]
+
     },
     {
       id: ID(),
       title: "Say hello to my mum",
       labels: ["#ff9e19", "#60bd4e", "#0179bf"],
       description: "Because you love your mum",
+      checklist : [ 
+        {
+          title: "Say hi to girlfriend",
+          done: true
+        },
+        {
+          title: "Go ski",
+          done: false
+        },
+        {
+          title: "Repear the dishwaser",
+          done: false
+        },
+      ]
     },
   ]);
 
