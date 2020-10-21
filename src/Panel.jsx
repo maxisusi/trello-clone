@@ -4,6 +4,7 @@ import {
   CardElementContext,
   DisplayPanelContext,
   SelectedCardContext,
+  ID
 } from "./CardElementProvider";
 
 import ViewAgendaIcon from "@material-ui/icons/ViewAgenda";
@@ -16,15 +17,20 @@ import { Button, IconButton } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import FormControl from "@material-ui/core/FormControl";
 
+
 const Panel = () => {
   const [displayPanel, setDisplayPanel] = useContext(DisplayPanelContext);
   const [addChecklistMenu, setAddChecklistMenu] = useState(false);
-  const [checkListInput, setCheckListInput] = useState('');
-  const [cardElement, setCardElement] = useContext(CardElementContext);
-  const [selectedCard, setSelectedCard] = useContext(SelectedCardContext);
-  const [cardId, setCardId] = useState(null);
+  const [checkListInput, setCheckListInput] = useState("");
 
-  console.log(checkListInput);
+  //Main card elements
+  const [cardElement, setCardElement] = useContext(CardElementContext);
+
+  //Current card selected
+  const [selectedCard, setSelectedCard] = useContext(SelectedCardContext);
+
+  //Get ID of the current selected card
+  const [cardId, setCardId] = useState(null);
 
   useEffect(() => {
     for (let i = 0; i < cardElement.length; i++) {
@@ -43,30 +49,34 @@ const Panel = () => {
     setCardElement([...cardElement], (cardElement[cardId].title = e));
   };
 
+  //#region Add todo element
   const addTodo = (e) => {
     e.preventDefault();
 
+    console.log(addChecklistMenu);
+    const newTodo = {
+      id: ID(),
+      title: checkListInput,
+      done: false,
+    };
 
-      if(addChecklistMenu === '') {
-        console.log('No input');
-        return;
-      }
-      else {
-        console.log(addChecklistMenu);
-        const newTodo = {
-          done: false,
-          title: checkListInput,
-        };
-  
-        setCardElement(
-          [...cardElement],
-          cardElement[cardId].checklist.push(newTodo)
-        );
-        setAddChecklistMenu(false);
-      }
+    setCardElement(
+      [...cardElement],
+      cardElement[cardId].checklist.push(newTodo)
+    );
+    setAddChecklistMenu(false);
+  };
 
+  //#endregion
 
-    
+  const handleChecklistChange = (e, checkElement, id) => {
+
+    setCardElement(
+      [...cardElement],
+      cardElement[cardId].checklist.map((element) =>
+        element.id === id ? (element.done = !checkElement) : null
+      )
+    );
   };
 
   if (displayPanel) {
@@ -78,7 +88,7 @@ const Panel = () => {
         ></div>
 
         <div className="panel__form">
-          {/* Header */}
+          {/* Header of the panel */}
           <div className="panel__header">
             <div className="panel__headerLeft">
               <ViewAgendaIcon className="panel__icon"></ViewAgendaIcon>
@@ -95,7 +105,10 @@ const Panel = () => {
             />
           </div>
 
+          {/* Selected labels */}
+
           <SelectLabels></SelectLabels>
+
           {/* Description */}
 
           <div className="panel__description">
@@ -112,21 +125,30 @@ const Panel = () => {
             ></textarea>
           </div>
 
+          {/* Checklist */}
+
           <div className="panel__toDo">
             <div className="panel__descriptionHeader">
               <PlaylistAddCheckIcon className="panel__icon"></PlaylistAddCheckIcon>
               <h3>Checklist</h3>
             </div>
 
+            {/* Display checklist point */}
+
             {selectedCard.checklist
               ? selectedCard.checklist.map((element) => (
                   <Checklist
                     title={element.title}
                     done={element.done}
+                    key={element.id}
+                    id={element.id}
+                    handleChecklistChange={handleChecklistChange}
                     className="panel__checklist"
                   />
                 ))
               : null}
+
+            {/* Add elements to the checklist */}
 
             <div className="panel__checklistAddElement">
               {addChecklistMenu ? (

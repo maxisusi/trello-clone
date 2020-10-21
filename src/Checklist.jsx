@@ -1,26 +1,81 @@
-import React from 'react'
-import './Checklist.scss'
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
-import IconButton from '@material-ui/core/IconButton';
-import Checkbox from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
+import React, { useState, useEffect } from "react";
+import "./Checklist.scss";
+import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
+import IconButton from "@material-ui/core/IconButton";
+import Checkbox from "@material-ui/core/Checkbox";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 
-const Checklist = ({title,done}) => {
+//Menu element
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import Fade from "@material-ui/core/Fade";
 
-    return (
-        <div className="checklist">
-            <FormControlLabel 
-            control={
-                <Checkbox
-                />
-            }
-            label={title}/>
+const Checklist = ({ title, done, id, handleChecklistChange }) => {
+  //#region MaterialUI menu
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [onHover, setOnHover] = useState(null);
+  const open = Boolean(anchorEl);
 
-            <IconButton>
-                <MoreHorizIcon/>
-            </IconButton>
-        </div>
-    )
-}
+  const handleClick = (event) => {
+    event.stopPropagation();
+    setAnchorEl(event.currentTarget);
+  };
 
-export default Checklist
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  //#endregion
+
+  const [checkElement, setCheckElement] = useState(false);
+
+  useEffect(() => {
+    setCheckElement(done);
+  }, [Checklist]);
+
+  const handleChange = (e) => {
+    setCheckElement(!checkElement);
+    handleChecklistChange(e, checkElement, id);
+  };
+
+  return (
+    <div className="checklist">
+      <FormControlLabel
+        control={
+          <Checkbox
+            onChange={(e) => handleChange(e)}
+            checked={checkElement}
+            name={title}
+          />
+        }
+        label={title}
+      />
+      <IconButton
+        className="cards__pen"
+        aria-controls="fade-menu"
+        aria-haspopup="true"
+        onClick={handleClick}
+      >
+        <MoreHorizIcon />
+      </IconButton>
+
+      <Menu
+        id="fade-menu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={open}
+        onClose={handleClose}
+        TransitionComponent={Fade}
+      >
+        <MenuItem
+          onClick={() => {
+            handleClose();
+          }}
+        >
+          Delete
+        </MenuItem>
+      </Menu>
+    </div>
+  );
+};
+
+export default Checklist;

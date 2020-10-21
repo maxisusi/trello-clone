@@ -7,19 +7,21 @@ export const CardElementContext = createContext();
 export const DisplayPanelContext = createContext();
 export const SelectedCardContext = createContext();
 
+export const ID = function () {
+  return "_" + Math.random().toString(36).substr(2, 9);
+};
+
 export const CardElementProvider = () => {
   const [displayPanel, setDisplayPanel] = useState(false);
   const [selectedCard, setSelectedCard] = useState({
-    id: '',
-    title: '',
+    id: "",
+    title: "",
     labels: null,
-    description: '',
+    description: "",
     checklist: null,
   });
 
-  const ID = function () {
-    return "_" + Math.random().toString(36).substr(2, 9);
-  };
+
 
   const [cardElement, setCardElement] = useState([
     {
@@ -27,59 +29,64 @@ export const CardElementProvider = () => {
       title: "Have fun",
       labels: ["#ff9e19", "#60bd4e", "#0179bf"],
       description: "It's important to have fun",
-      checklist : [ 
-      {
-        title: "Create datasheet",
-        done: false
-      },
-      {
-        title: "Make sure you cook enough pasta",
-        done: true
-      },
-      {
-        title: "Have sex as much as possible",
-        done: true
-      },
-    ]
-      
+      checklist: [
+        {
+          id: ID(),
+          title: "Create datasheet",
+          done: false,
+        },
+        {
+          id: ID(),
+          title: "Make sure you cook enough pasta",
+          done: true,
+        },
+        {
+          id: ID(),
+          title: "Have sex as much as possible",
+          done: true,
+        },
+      ],
     },
     {
       id: ID(),
       title: "Test my limits",
       labels: ["#ff9e19", "#60bd4e"],
       description: "You should always push the envelop",
-      checklist : [ 
+      checklist: [
         {
+          id: ID(),
           title: "Drink coffea",
-          done: true
+          done: true,
         },
         {
+          id: ID(),
           title: "Buy a new lambo",
-          done: false
+          done: false,
         },
-
-      ]
-
+      ],
     },
     {
       id: ID(),
       title: "Say hello to my mum",
       labels: ["#ff9e19", "#60bd4e", "#0179bf"],
       description: "Because you love your mum",
-      checklist : [ 
+      checklist: [
         {
+          id: ID(),
           title: "Say hi to girlfriend",
-          done: true
+          done: true,
         },
         {
+          id: ID(),
           title: "Go ski",
-          done: false
+          done: false,
         },
         {
+          id: ID(),
           title: "Repear the dishwaser",
-          done: false
+          done: false,
         },
-      ]
+      ],
     },
   ]);
 
