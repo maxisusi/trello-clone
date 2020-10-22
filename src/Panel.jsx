@@ -4,7 +4,7 @@ import {
   CardElementContext,
   DisplayPanelContext,
   SelectedCardContext,
-  ID
+  ID,
 } from "./CardElementProvider";
 
 import ViewAgendaIcon from "@material-ui/icons/ViewAgenda";
@@ -15,13 +15,18 @@ import SelectLabels from "./SelectLabels";
 import Checklist from "./Checklist";
 import { Button, IconButton } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
-import FormControl from "@material-ui/core/FormControl";
 
+import { makeStyles } from "@material-ui/core/styles";
+import LinearProgress from "@material-ui/core/LinearProgress";
+import Typography from "@material-ui/core/Typography";
+import Box from "@material-ui/core/Box";
+import PropTypes from "prop-types";
 
 const Panel = () => {
   const [displayPanel, setDisplayPanel] = useContext(DisplayPanelContext);
   const [addChecklistMenu, setAddChecklistMenu] = useState(false);
   const [checkListInput, setCheckListInput] = useState("");
+  const [remainingChecklist, setRemainingChecklist] = useState(0);
 
   //Main card elements
   const [cardElement, setCardElement] = useContext(CardElementContext);
@@ -29,7 +34,7 @@ const Panel = () => {
   //Current card selected
   const [selectedCard, setSelectedCard] = useContext(SelectedCardContext);
 
-  //Get ID of the current selected card
+  //#region Get ID of the current selected card
   const [cardId, setCardId] = useState(null);
 
   useEffect(() => {
@@ -40,6 +45,8 @@ const Panel = () => {
       }
     }
   }, [selectedCard]);
+
+  //#endregion
 
   const changeDescription = (e) => {
     setCardElement([...cardElement], (cardElement[cardId].description = e));
@@ -69,8 +76,8 @@ const Panel = () => {
 
   //#endregion
 
-  const handleChecklistChange = (e, checkElement, id) => {
-
+  //#region Change checlist elem based on the checklist
+  const handleChecklistChange = (checkElement, id) => {
     setCardElement(
       [...cardElement],
       cardElement[cardId].checklist.map((element) =>
@@ -78,6 +85,52 @@ const Panel = () => {
       )
     );
   };
+
+  useEffect(() => {
+    if (selectedCard.checklist) {
+      const totalChecklist = selectedCard.checklist.length;
+      let checkedCount = 0;
+
+      const getCheckedCount = selectedCard.checklist.forEach((element) => {
+        if (element.done === true) checkedCount += 1;
+      });
+
+      console.log(checkedCount);
+
+      setRemainingChecklist(((checkedCount / totalChecklist) * 100).toFixed());
+    } else return;
+  }, [selectedCard, cardElement]);
+
+  //#endregion
+
+  function LinearProgressWithLabel(props) {
+    return (
+      <Box display="flex" alignItems="center">
+        <Box width="100%" mr={1}>
+          <LinearProgress variant="determinate" {...props} />
+        </Box>
+        <Box minWidth={35}>
+          <Typography variant="body2" color="textSecondary">{`${Math.round(
+            props.value
+          )}%`}</Typography>
+        </Box>
+      </Box>
+    );
+  }
+
+  LinearProgressWithLabel.propTypes = {
+    /**
+     * The value of the progress indicator for the determinate and buffer variants.
+     * Value between 0 and 100.
+     */
+    value: PropTypes.number.isRequired,
+  };
+
+  const useStyles = makeStyles({
+    root: {
+      width: "100%",
+    },
+  });
 
   if (displayPanel) {
     return (
@@ -132,6 +185,10 @@ const Panel = () => {
               <PlaylistAddCheckIcon className="panel__icon"></PlaylistAddCheckIcon>
               <h3>Checklist</h3>
             </div>
+
+            {selectedCard.checklist.length == 0 ? (
+              null
+            ) : (<LinearProgressWithLabel value={remainingChecklist} />)}
 
             {/* Display checklist point */}
 

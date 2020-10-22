@@ -16,7 +16,6 @@ const CardsElement = ({
   deleteCard,
 }) => {
 
-
   //#region MaterialUI menu
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [onHover, setOnHover] = useState(null);

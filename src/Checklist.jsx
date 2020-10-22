@@ -4,6 +4,7 @@ import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import IconButton from "@material-ui/core/IconButton";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
+import { withStyles } from "@material-ui/core/styles";
 
 //Menu element
 import Menu from "@material-ui/core/Menu";
@@ -28,13 +29,13 @@ const Checklist = ({ title, done, id, handleChecklistChange }) => {
 
   const [checkElement, setCheckElement] = useState(false);
 
-  useEffect(() => {
+  useEffect(() =>  {
     setCheckElement(done);
   }, [Checklist]);
 
   const handleChange = (e) => {
     setCheckElement(!checkElement);
-    handleChecklistChange(e, checkElement, id);
+    handleChecklistChange(checkElement, id);
   };
 
   return (

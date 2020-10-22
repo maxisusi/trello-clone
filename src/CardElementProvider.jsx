@@ -21,8 +21,6 @@ export const CardElementProvider = () => {
     checklist: null,
   });
 
-
-
   const [cardElement, setCardElement] = useState([
     {
       id: ID(),
