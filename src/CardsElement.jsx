@@ -5,6 +5,8 @@ import { IconButton } from "@material-ui/core";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Fade from "@material-ui/core/Fade";
+import Chip from "@material-ui/core/Chip";
+import LibraryAddCheckIcon from "@material-ui/icons/LibraryAddCheck";
 
 const CardsElement = ({
   id,
@@ -15,7 +17,6 @@ const CardsElement = ({
   description,
   deleteCard,
 }) => {
-
   //#region MaterialUI menu
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [onHover, setOnHover] = useState(null);
@@ -37,9 +38,10 @@ const CardsElement = ({
       displayCard(id, title, labels, description, checklist);
     }
   };
+
   return (
     <div>
-      <div className="cards__element"  onClick={openMenu}>
+      <div className="cards__element" onClick={openMenu}>
         <div className="cards__labels">
           {labels?.map((colors) => (
             <div>
@@ -53,15 +55,23 @@ const CardsElement = ({
         </div>
 
         <p>{title}</p>
-        <IconButton
-          size={"small"}
-          className="cards__pen"
-          aria-controls="fade-menu"
-          aria-haspopup="true"
-          onClick={handleClick}
-        >
-          <CreateIcon fontSize={"small"} />
-        </IconButton>
+        <div className="cards__downElements">
+          <Chip
+            label="11/11"
+            color="green"
+            icon={<LibraryAddCheckIcon />}
+            size="small"
+          />
+          <IconButton
+            size={"small"}
+            className="cards__pen"
+            aria-controls="fade-menu"
+            aria-haspopup="true"
+            onClick={handleClick}
+          >
+            <CreateIcon fontSize={"small"} />
+          </IconButton>
+        </div>
 
         <Menu
           id="fade-menu"

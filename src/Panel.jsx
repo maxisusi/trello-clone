@@ -86,6 +86,22 @@ const Panel = () => {
     );
   };
 
+  const deleteChecklistElement = (id) => {
+
+    console.log(
+      cardElement[cardId].checklist.filter(elem => elem.id !== id)
+    );
+
+    console.log(
+      cardElement);
+    
+    setCardElement(
+      [...cardElement],
+      cardElement[cardId].checklist.splice(selectedCard.checklist.indexOf(id))
+    );
+  };
+
+  // get the percentage of remaining checklist
   useEffect(() => {
     if (selectedCard.checklist) {
       const totalChecklist = selectedCard.checklist.length;
@@ -95,7 +111,6 @@ const Panel = () => {
         if (element.done === true) checkedCount += 1;
       });
 
-      console.log(checkedCount);
 
       setRemainingChecklist(((checkedCount / totalChecklist) * 100).toFixed());
     } else return;
@@ -186,9 +201,9 @@ const Panel = () => {
               <h3>Checklist</h3>
             </div>
 
-            {selectedCard.checklist.length == 0 ? (
-              null
-            ) : (<LinearProgressWithLabel value={remainingChecklist} />)}
+            {selectedCard.checklist.length == 0 ? null : (
+              <LinearProgressWithLabel value={remainingChecklist} />
+            )}
 
             {/* Display checklist point */}
 
@@ -200,6 +215,7 @@ const Panel = () => {
                     key={element.id}
                     id={element.id}
                     handleChecklistChange={handleChecklistChange}
+                    deleteChecklistElement={deleteChecklistElement}
                     className="panel__checklist"
                   />
                 ))

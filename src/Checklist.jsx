@@ -11,7 +11,7 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Fade from "@material-ui/core/Fade";
 
-const Checklist = ({ title, done, id, handleChecklistChange }) => {
+const Checklist = ({ title, done, id, handleChecklistChange, deleteChecklistElement }) => {
   //#region MaterialUI menu
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [onHover, setOnHover] = useState(null);
@@ -69,6 +69,7 @@ const Checklist = ({ title, done, id, handleChecklistChange }) => {
       >
         <MenuItem
           onClick={() => {
+            deleteChecklistElement(id);
             handleClose();
           }}
         >
