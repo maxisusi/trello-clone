@@ -46,8 +46,18 @@
       .cards__downElements {
         margin-top: 15px;
         display: flex;
+        min-height: 30px;
+     
+        width: 100%;
         justify-content: space-between;
         align-items: center;
+
+        .uncompleted {
+          background-color: #f44336 !important;
+        }
+        .completed {
+          background-color: #4caf50 !important;
+        }
       }
 
       .cards__labels {
@@ -71,7 +81,7 @@
       }
       &:hover {
         .cards__pen {
-          // float: right;
+  
           display: block;
 
           &:hover {

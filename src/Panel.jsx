@@ -87,13 +87,14 @@ const Panel = () => {
   };
 
   const deleteChecklistElement = (id) => {
+    const indexOfId = [...selectedCard.checklist].findIndex(
+      (obj) => obj.id === id
+    );
 
-    const indexOfId = [...selectedCard.checklist].findIndex(obj => obj.id === id );
-    
-        setCardElement(
+    setCardElement(
       [...cardElement],
-      cardElement[cardId].checklist.splice(indexOfId, 1))
-
+      cardElement[cardId].checklist.splice(indexOfId, 1)
+    );
   };
 
   // get the percentage of remaining checklist

@@ -80,7 +80,7 @@ const Cards = () => {
             checklist={element.checklist}
             displayCard={displayCard}
             deleteCard={deleteCard}
-   
+            
           />
         ))}
       </div>

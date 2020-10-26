@@ -9,6 +9,7 @@ import Fade from "@material-ui/core/Fade";
 import Chip from "@material-ui/core/Chip";
 import LibraryAddCheckIcon from "@material-ui/icons/LibraryAddCheck";
 
+import { CardElementContext } from "./CardElementProvider";
 
 const CardsElement = ({
   id,
@@ -19,6 +20,8 @@ const CardsElement = ({
   description,
   deleteCard,
 }) => {
+  const [cardElement, setCardElement] = useContext(CardElementContext);
+  const [cardCompleted, setCardCompleted] = useState("uncompleted");
   //#region MaterialUI menu
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [onHover, setOnHover] = useState(null);
@@ -41,9 +44,18 @@ const CardsElement = ({
     }
   };
 
+  let checklistRemainingElement = 0;
+  checklist.filter((elem) => {
+    if (elem.done == true) checklistRemainingElement++;
+  });
+
+  useEffect(() => {
+    if (checklistRemainingElement == checklist.length)
+      setCardCompleted("completed");
+    else setCardCompleted("uncompleted");
+  }, [cardElement]);
+
   //Main card elements
-
-
 
   return (
     <div>
@@ -60,24 +72,45 @@ const CardsElement = ({
           ))}
         </div>
 
-        <p>{title}</p>
-        <div className="cards__downElements">
-          <Chip
-            label="11/11"
-            color="green"
-            icon={<LibraryAddCheckIcon />}
-            size="small"
-          />
-          <IconButton
-            size={"small"}
-            className="cards__pen"
-            aria-controls="fade-menu"
-            aria-haspopup="true"
-            onClick={handleClick}
-          >
-            <CreateIcon fontSize={"small"} />
-          </IconButton>
-        </div>
+        {checklist.length == 0 ? (
+          <div className="cards__downElements">
+            <p>{title}</p>
+            <IconButton
+              size={"small"}
+              className="cards__pen"
+              aria-controls="fade-menu"
+              aria-haspopup="true"
+              onClick={handleClick}
+            >
+              <CreateIcon fontSize={"small"} />
+            </IconButton>
+          </div>
+        ) : (
+          <>
+            <p>{title}</p>
+            <div className="cards__downElements">
+              <Chip
+                label={`${checklistRemainingElement}/${checklist.length}`}
+                className={
+                  "cards__chip " + cardCompleted
+                }
+                color="secondary"
+                icon={<LibraryAddCheckIcon />}
+                size="small"
+              />
+
+              <IconButton
+                size={"small"}
+                className="cards__pen"
+                aria-controls="fade-menu"
+                aria-haspopup="true"
+                onClick={handleClick}
+              >
+                <CreateIcon fontSize={"small"} />
+              </IconButton>
+            </div>
+          </>
+        )}
 
         <Menu
           id="fade-menu"

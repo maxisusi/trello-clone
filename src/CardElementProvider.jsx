@@ -22,6 +22,8 @@ export const CardElementProvider = () => {
     checklist: null,
   });
 
+
+
   const [cardElement, setCardElement] = useState([
     {
       id: ID(),
@@ -32,7 +34,7 @@ export const CardElementProvider = () => {
         {
           id: ID(),
           title: "Create datasheet",
-          done: false,
+          done: true,
         },
         {
           id: ID(),
@@ -45,6 +47,7 @@ export const CardElementProvider = () => {
           done: true,
         },
       ],
+
     },
     {
       id: ID(),
