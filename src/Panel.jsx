@@ -160,17 +160,20 @@ const Panel = () => {
           <div className="panel__header">
             <div className="panel__headerLeft">
               <ViewAgendaIcon className="panel__icon"></ViewAgendaIcon>
-              <input
-                className="panel__textInput"
+              <TextField
+                fullWidth={true}
+                size={"medium"}             
                 placeholder="Add title"
                 defaultValue={selectedCard.title}
                 onChange={(e) => changeTitle(e.target.value)}
               />
             </div>
-            <ClearIcon
-              className="panel__close"
-              onClick={() => setDisplayPanel(false)}
-            />
+            <IconButton>
+              <ClearIcon
+                className="panel__close"
+                onClick={() => setDisplayPanel(false)}
+              />
+            </IconButton>
           </div>
 
           {/* Selected labels */}
@@ -182,15 +185,20 @@ const Panel = () => {
           <div className="panel__description">
             <div className="panel__descriptionHeader">
               <SubjectIcon className="panel__icon"></SubjectIcon>
-              <h3>Description</h3>
+              <Typography variant="h6">Description</Typography>
             </div>
 
-            <textarea
+            <TextField
               className="panel__textDescription"
-              placeholder="Add a more detailed description"
+              fullWidth={true}
+              label="Multiline"
+              variant="outlined"
+              multiline
+              rows={4}
+              label="Add a more detailed description"
               defaultValue={selectedCard.description}
               onChange={(e) => changeDescription(e.target.value)}
-            ></textarea>
+            ></TextField>
           </div>
 
           {/* Checklist */}
@@ -198,7 +206,7 @@ const Panel = () => {
           <div className="panel__toDo">
             <div className="panel__descriptionHeader">
               <PlaylistAddCheckIcon className="panel__icon"></PlaylistAddCheckIcon>
-              <h3>Checklist</h3>
+              <Typography variant="h6">Checklist</Typography>
             </div>
 
             {selectedCard.checklist.length == 0 ? null : (
@@ -232,6 +240,7 @@ const Panel = () => {
                   <TextField
                     onChange={(e) => setCheckListInput(e.target.value)}
                     variant="outlined"
+                    autoFocus={true}
                     label="Add to checklist"
                     className="panel__checklistFill"
                     fullWidth={true}

@@ -61,19 +61,16 @@
 .panel__descriptionHeader {
   display: flex;
   margin-bottom: 20px;
+  align-items: center;
 }
 
 .panel__textDescription {
   resize: none;
   font-family: inherit;
-  width: 90%;
-  height: 100%;
-  border: none;
-  font-size: 16px;
-  background-color: #e3e6ea;
-  padding: 0.9em;
-  border-radius: 10px;
-  margin-bottom: 45px;
+
+
+
+  margin-bottom: 45px !important;
 
   &:focus {
     background-color: white;

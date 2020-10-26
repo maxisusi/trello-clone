@@ -97,6 +97,7 @@ const Cards = () => {
             <TextField
               className="cards__textInput"
               fullWidth={true}
+              autoFocus={true}
               variant="outlined"
               label="Fill up your card"
               onChange={(e) => {
