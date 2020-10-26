@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
 import "./Cards.scss";
 
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+
 import CreateIcon from "@material-ui/icons/Create";
 import { IconButton } from "@material-ui/core";
 import Menu from "@material-ui/core/Menu";
@@ -10,6 +13,7 @@ import Chip from "@material-ui/core/Chip";
 import LibraryAddCheckIcon from "@material-ui/icons/LibraryAddCheck";
 
 import { CardElementContext } from "./CardElementProvider";
+import Typography from "@material-ui/core/Typography";
 
 const CardsElement = ({
   id,
@@ -58,8 +62,8 @@ const CardsElement = ({
   //Main card elements
 
   return (
-    <div>
-      <div className="cards__element" onClick={openMenu}>
+    <Card className="cards__element" onClick={openMenu}>
+      <CardContent>
         <div className="cards__labels">
           {labels?.map((colors) => (
             <div>
@@ -71,10 +75,9 @@ const CardsElement = ({
             </div>
           ))}
         </div>
-
         {checklist.length == 0 ? (
           <div className="cards__downElements">
-            <p>{title}</p>
+            <Typography color="page">{title}</Typography>
             <IconButton
               size={"small"}
               className="cards__pen"
@@ -87,18 +90,15 @@ const CardsElement = ({
           </div>
         ) : (
           <>
-            <p>{title}</p>
+            <Typography color="page">{title}</Typography>
             <div className="cards__downElements">
               <Chip
                 label={`${checklistRemainingElement}/${checklist.length}`}
-                className={
-                  "cards__chip " + cardCompleted
-                }
+                className={"cards__chip " + cardCompleted}
                 color="secondary"
                 icon={<LibraryAddCheckIcon />}
                 size="small"
               />
-
               <IconButton
                 size={"small"}
                 className="cards__pen"
@@ -129,8 +129,8 @@ const CardsElement = ({
             Delete
           </MenuItem>
         </Menu>
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 };
 

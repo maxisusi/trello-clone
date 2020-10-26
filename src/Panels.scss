@@ -58,7 +58,6 @@
   }
 }
 
-
 .panel__descriptionHeader {
   display: flex;
   margin-bottom: 20px;
@@ -82,26 +81,11 @@
 }
 
 .panel__toDo {
-
   .panel__checklistAddElement {
     margin-top: 20px;
-    .panel__checklistMenu {
-      width: 100%;
-      .panel__checklistFill {
-        width: 100%;
-        margin-bottom: 20px;
-      }
-      .panel__checklistConfirmation {
-        .panel__checklistConfirmationSave {
-          background-color: #60bd4e !important;
-          color: white !important;
-          margin-right: 15px;
-        }
 
-        .panel__checklistConfirmationUnsave {
-          color: grey;
-        }
-      }
+    .panel__checklistFill {
+      margin-bottom: 20px;
     }
   }
 }

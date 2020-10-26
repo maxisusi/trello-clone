@@ -1,9 +1,9 @@
+@import './App.scss';
+
 .cards {
-  background-color: #ebecf0;
-  width: 300px;
+  background-color: #ebecf0 !important;
+  max-width: 350px;
   min-height: 180px;
-  padding: 1em;
-  border-radius: 10px;
   position: relative;
   z-index: 50;
 
@@ -25,22 +25,13 @@
     }
   }
 
-  .cards__wrapper {
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-      width: 100% inherit;
+
 
     .cards__element {
 
       position: relative;
       cursor: pointer;
-      background-color: white;
-      padding: 1em;
-      border-radius: 10px;
-      font-size: 0.9em;
-      margin-bottom: 20px;
-      box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px; 
       z-index: 5;
 
       .cards__downElements {
@@ -53,10 +44,10 @@
         align-items: center;
 
         .uncompleted {
-          background-color: #f44336 !important;
+          background-color: $redMissing !important;
         }
         .completed {
-          background-color: #4caf50 !important;
+          background-color: $greenValidation !important;
         }
       }
 
@@ -91,50 +82,14 @@
       }
     }
   }
-  .cards__addCard {
-    margin-top: 20px;
-    padding: 0.5em;
 
-    display: flex;
-    align-items: center;
-    opacity: 0.5;
-    border-radius: 10px;
 
-    p {
-      margin-left: 10px;
-    }
-    &:hover {
-      background-color: lightgray;
-      cursor: pointer;
-    }
-  }
+
+
+  
 
   .cards__textInput {
-    width: 90%;
-    padding: 1em;
-    font-family: inherit;
-    border: none;
-    border-radius: 10px;
-    resize: none;
-    margin-bottom: 20px;
-    box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px !important;
   }
 
-  .cards__cardValidation {
-    display: flex;
-    align-items: center;
 
-    .cards_save {
-
-
-      background-color: #60bd4e !important;
-      color: white !important;
-      
-      margin-right: 15px;
-    }
-    .cards__cross {
-      color: grey;
-
-    }
-  }
-}

@@ -1,7 +1,6 @@
 import { render } from "@testing-library/react";
 import React, { createContext, useState } from "react";
 import Cards from "./Cards";
-import CardsElement from "./CardsElement";
 import Panel from "./Panel";
 
 export const CardElementContext = createContext();

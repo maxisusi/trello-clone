@@ -1,5 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./Panels.scss";
+
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+
 import {
   CardElementContext,
   DisplayPanelContext,
@@ -10,10 +14,11 @@ import {
 import ViewAgendaIcon from "@material-ui/icons/ViewAgenda";
 import ClearIcon from "@material-ui/icons/Clear";
 import SubjectIcon from "@material-ui/icons/Subject";
+import AddIcon from "@material-ui/icons/Add";
 import PlaylistAddCheckIcon from "@material-ui/icons/PlaylistAddCheck";
 import SelectLabels from "./SelectLabels";
 import Checklist from "./Checklist";
-import { Button, IconButton } from "@material-ui/core";
+import { Button, ButtonGroup, IconButton } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -229,22 +234,28 @@ const Panel = () => {
                     variant="outlined"
                     label="Add to checklist"
                     className="panel__checklistFill"
+                    fullWidth={true}
                   ></TextField>
-                  <div className="panel__checklistConfirmation">
+
+                  <ButtonGroup>
                     <Button
-                      className="panel__checklistConfirmationSave"
+                      startIcon={<AddIcon />}
+                      color="primary"
                       variant="contained"
                       onClick={addTodo}
                     >
                       Save
                     </Button>
-                    <IconButton>
-                      <ClearIcon
-                        className="panel__checklistConfirmationUnsave"
-                        onClick={() => setAddChecklistMenu(false)}
-                      ></ClearIcon>
-                    </IconButton>
-                  </div>
+
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      onClick={() => setAddChecklistMenu(false)}
+                      startIcon={<ClearIcon />}
+                    >
+                      Remove
+                    </Button>
+                  </ButtonGroup>
                 </form>
               ) : (
                 <Button
