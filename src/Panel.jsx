@@ -88,17 +88,12 @@ const Panel = () => {
 
   const deleteChecklistElement = (id) => {
 
-    console.log(
-      cardElement[cardId].checklist.filter(elem => elem.id !== id)
-    );
-
-    console.log(
-      cardElement);
+    const indexOfId = [...selectedCard.checklist].findIndex(obj => obj.id === id );
     
-    setCardElement(
+        setCardElement(
       [...cardElement],
-      cardElement[cardId].checklist.splice(selectedCard.checklist.indexOf(id))
-    );
+      cardElement[cardId].checklist.splice(indexOfId, 1))
+
   };
 
   // get the percentage of remaining checklist
@@ -110,7 +105,6 @@ const Panel = () => {
       const getCheckedCount = selectedCard.checklist.forEach((element) => {
         if (element.done === true) checkedCount += 1;
       });
-
 
       setRemainingChecklist(((checkedCount / totalChecklist) * 100).toFixed());
     } else return;

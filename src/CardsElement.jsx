@@ -1,5 +1,6 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./Cards.scss";
+
 import CreateIcon from "@material-ui/icons/Create";
 import { IconButton } from "@material-ui/core";
 import Menu from "@material-ui/core/Menu";
@@ -7,6 +8,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Fade from "@material-ui/core/Fade";
 import Chip from "@material-ui/core/Chip";
 import LibraryAddCheckIcon from "@material-ui/icons/LibraryAddCheck";
+
 
 const CardsElement = ({
   id,
@@ -38,6 +40,10 @@ const CardsElement = ({
       displayCard(id, title, labels, description, checklist);
     }
   };
+
+  //Main card elements
+
+
 
   return (
     <div>
