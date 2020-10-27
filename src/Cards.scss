@@ -36,15 +36,10 @@
 
       .cards__downElements {
         margin-top: 15px;
-        display: flex;
         min-height: 30px;
-     
-        width: 100%;
-        justify-content: space-between;
-        align-items: center;
-
+        
         .uncompleted {
-          background-color: $redMissing !important;
+          background-color: #E0E0E0 !important;
         }
         .completed {
           background-color: $greenValidation !important;

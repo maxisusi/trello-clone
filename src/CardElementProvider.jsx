@@ -1,3 +1,4 @@
+import { datePickerDefaultProps } from "@material-ui/pickers/constants/prop-types";
 import { render } from "@testing-library/react";
 import React, { createContext, useState } from "react";
 import Cards from "./Cards";
@@ -29,6 +30,7 @@ export const CardElementProvider = () => {
       title: "Have fun",
       labels: ["#ff9e19", "#60bd4e", "#0179bf"],
       description: "It's important to have fun",
+      dueDate: new Date(),
       checklist: [
         {
           id: ID(),
@@ -53,6 +55,7 @@ export const CardElementProvider = () => {
       title: "Test my limits",
       labels: ["#ff9e19", "#60bd4e"],
       description: "You should always push the envelop",
+      dueDate: new Date(),
       checklist: [
         {
           id: ID(),
@@ -95,7 +98,7 @@ export const CardElementProvider = () => {
     <CardElementContext.Provider value={[cardElement, setCardElement]}>
       <DisplayPanelContext.Provider value={[displayPanel, setDisplayPanel]}>
         <SelectedCardContext.Provider value={[selectedCard, setSelectedCard]}>
-          <Panel />
+
           <Cards />
         </SelectedCardContext.Provider>
       </DisplayPanelContext.Provider>

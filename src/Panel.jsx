@@ -21,13 +21,14 @@ import { makeStyles } from "@material-ui/core/styles";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
-import Grid from '@material-ui/core/Grid';
+import Grid from "@material-ui/core/Grid";
 import PropTypes from "prop-types";
 import PanelDescription from "./PanelDescription";
 import PanelHeader from "./PanelHeader";
 import PanelDeadline from "./PanelDeadline";
 
 const Panel = () => {
+
   const [displayPanel, setDisplayPanel] = useContext(DisplayPanelContext);
   const [addChecklistMenu, setAddChecklistMenu] = useState(false);
   const [checkListInput, setCheckListInput] = useState("");
@@ -138,112 +139,104 @@ const Panel = () => {
     },
   });
 
-  if (displayPanel) {
-    return (
-      <div className="panel">
-        <div
-          className="panel__blackBackground"
-          onClick={() => setDisplayPanel(false)}
-        ></div>
+  return (
+    <div className="panel">
+      
+      <div className="panel__form">
+        {/* Header of the panel */}
+        <PanelHeader cardId={cardId} />
 
-        <div className="panel__form">
-          {/* Header of the panel */}
-          <PanelHeader cardId={cardId} />
+        {/* Selected labels */}
 
-          {/* Selected labels */}
+        <Grid container justify="space-between">
+          <PanelLabels />
+          <PanelDeadline />
+        </Grid>
 
-          <Grid container justify="space-between">
-            <PanelLabels />
-            <PanelDeadline />
-          </Grid>
+        {/* Description */}
 
-          {/* Description */}
+        <PanelDescription cardId={cardId} />
 
-          <PanelDescription cardId={cardId} />
+        {/* Checklist */}
 
-          {/* Checklist */}
+        <div className="panel__toDo">
+          <div className="panel__descriptionHeader">
+            <PlaylistAddCheckIcon className="panel__icon"></PlaylistAddCheckIcon>
+            <Typography variant="h6">
+              <Box fontWeight="fontWeightBold">Checklist</Box>
+            </Typography>
+          </div>
 
-          <div className="panel__toDo">
-            <div className="panel__descriptionHeader">
-              <PlaylistAddCheckIcon className="panel__icon"></PlaylistAddCheckIcon>
-              <Typography variant="h6">
-                <Box fontWeight="fontWeightBold">Checklist</Box>
-              </Typography>
-            </div>
+          {selectedCard?.checklist.length == 0 ? null : (
+            <LinearProgressWithLabel value={remainingChecklist} />
+          )}
 
-            {selectedCard.checklist.length == 0 ? null : (
-              <LinearProgressWithLabel value={remainingChecklist} />
+          {/* Display checklist point */}
+
+          {selectedCard?.checklist
+            ? selectedCard.checklist.map((element) => (
+                <ChecklistElement
+                  title={element.title}
+                  done={element.done}
+                  key={element.id}
+                  id={element.id}
+                  handleChecklistChange={handleChecklistChange}
+                  deleteChecklistElement={deleteChecklistElement}
+                  className="panel__checklist"
+                />
+              ))
+            : null}
+
+          {/* Add elements to the checklist */}
+
+          <div className="panel__checklistAddElement">
+            {addChecklistMenu ? (
+              <form
+                onSubmit={(e) => addTodo(e)}
+                className="panel__checklistMenu"
+              >
+                <TextField
+                  onChange={(e) => setCheckListInput(e.target.value)}
+                  variant="outlined"
+                  autoFocus={true}
+                  label="Add to checklist"
+                  className="panel__checklistFill"
+                  fullWidth={true}
+                ></TextField>
+
+                <ButtonGroup>
+                  <Button
+                    startIcon={<AddIcon />}
+                    color="primary"
+                    variant="contained"
+                    onClick={addTodo}
+                  >
+                    Save
+                  </Button>
+
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    onClick={() => setAddChecklistMenu(false)}
+                    startIcon={<ClearIcon />}
+                  >
+                    Remove
+                  </Button>
+                </ButtonGroup>
+              </form>
+            ) : (
+              <Button
+                variant="contained"
+                onClick={() => setAddChecklistMenu(!addChecklistMenu)}
+              >
+                Add checklist
+              </Button>
             )}
-
-            {/* Display checklist point */}
-
-            {selectedCard.checklist
-              ? selectedCard.checklist.map((element) => (
-                  <ChecklistElement
-                    title={element.title}
-                    done={element.done}
-                    key={element.id}
-                    id={element.id}
-                    handleChecklistChange={handleChecklistChange}
-                    deleteChecklistElement={deleteChecklistElement}
-                    className="panel__checklist"
-                  />
-                ))
-              : null}
-
-            {/* Add elements to the checklist */}
-
-            <div className="panel__checklistAddElement">
-              {addChecklistMenu ? (
-                <form
-                  onSubmit={(e) => addTodo(e)}
-                  className="panel__checklistMenu"
-                >
-                  <TextField
-                    onChange={(e) => setCheckListInput(e.target.value)}
-                    variant="outlined"
-                    autoFocus={true}
-                    label="Add to checklist"
-                    className="panel__checklistFill"
-                    fullWidth={true}
-                  ></TextField>
-
-                  <ButtonGroup>
-                    <Button
-                      startIcon={<AddIcon />}
-                      color="primary"
-                      variant="contained"
-                      onClick={addTodo}
-                    >
-                      Save
-                    </Button>
-
-                    <Button
-                      variant="contained"
-                      color="secondary"
-                      onClick={() => setAddChecklistMenu(false)}
-                      startIcon={<ClearIcon />}
-                    >
-                      Remove
-                    </Button>
-                  </ButtonGroup>
-                </form>
-              ) : (
-                <Button
-                  variant="contained"
-                  onClick={() => setAddChecklistMenu(!addChecklistMenu)}
-                >
-                  Add checklist
-                </Button>
-              )}
-            </div>
           </div>
         </div>
       </div>
-    );
-  } else {
-    return null;
-  }
+    </div>
+  );
 };
 
 export default Panel;

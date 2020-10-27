@@ -1,93 +1,46 @@
 .panel {
-  position: absolute;
-  width: 100vw;
-  height: 100vh;
-  display: grid;
-  place-items: center;
-}
+  min-width: 35vw;
 
-.panel__blackBackground {
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  background-color: black;
-  opacity: 0.5;
-  z-index: 51;
-}
-
-.panel__form {
-  padding: 2em;
-
-  width: 35vw;
-  background-color: #ebecf0;
-  border-radius: 5px;
-  position: relative;
-  z-index: 51;
-
-  .panel__specification {
-    display: flex;
-    justify-content: start;
-  }
-}
-
-.panel__icon {
-  margin-right: 20px;
-}
-
-.panel__header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  margin-bottom: 50px;
-
-  .panel__textInput {
+  .panel__form {
+    padding: 2em;
     background-color: #ebecf0;
-    border: none;
-    width: 80%;
-    font-size: 18px;
-    font-weight: bold;
+  }
 
-    &:focus {
-      background-color: white;
+  .panel__icon {
+    margin-right: 20px;
+  }
+
+  .panel__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 50px;
+
+    .panel__headerLeft {
+      display: flex;
+      align-items: center;
+      flex-grow: 0.97;
     }
   }
 
-  .panel__headerLeft {
+  .panel__descriptionHeader {
     display: flex;
-    width: 100%;
+    margin-bottom: 20px;
+    align-items: center;
   }
 
-  .panel__close {
-    cursor: pointer;
+  .panel__textDescription {
+    margin-bottom: 45px !important;
   }
-}
 
-.panel__descriptionHeader {
-  display: flex;
-  margin-bottom: 20px;
-  align-items: center;
-}
+  .panel__toDo {
+    .panel__checklistAddElement {
+      margin-top: 20px;
 
-.panel__textDescription {
-  resize: none;
-  font-family: inherit;
-
-
-
-  margin-bottom: 45px !important;
-
-  &:focus {
-    background-color: white;
-  }
-}
-
-.panel__toDo {
-  .panel__checklistAddElement {
-    margin-top: 20px;
-
-    .panel__checklistFill {
-      margin-bottom: 20px;
+      .panel__checklistFill {
+        margin-bottom: 20px;
+      }
     }
   }
 }

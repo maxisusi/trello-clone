@@ -14,7 +14,7 @@ const PanelDeadline = () => {
   // The first commit of Material-UI
   const [selectedDate, setSelectedDate] = React.useState(new Date());
 
-  
+
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
@@ -34,7 +34,6 @@ const PanelDeadline = () => {
         <KeyboardDatePicker
           margin="normal"
           id="date-picker-dialog"
-          format="MM/dd/yyyy"
           value={selectedDate}
           onChange={handleDateChange}
           KeyboardButtonProps={{

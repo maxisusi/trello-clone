@@ -18,10 +18,34 @@ import ButtonGroup from "@material-ui/core/ButtonGroup";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import AddIcon from "@material-ui/icons/Add";
 import DeleteIcon from "@material-ui/icons/Delete";
-import Typography from "@material-ui/core/Typography";
 
-import { makeStyles } from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
+import { makeStyles } from "@material-ui/core/styles";
+import Modal from "@material-ui/core/Modal";
+import Panel from './Panel';
+
+
+
+
+function getModalStyle() {
+  const top = 50 
+  const left = 50
+
+  return {
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%, -${left}%)`,
+  };
+}
+
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    position: "absolute",
+    outline: 'none',
+    border: "2px",
+    boxShadow: theme.shadows[5],
+   
+  },
+}));
 
 const Cards = () => {
   const [cardTitle, setCardTitle] = useState("LSVD 🎹");
@@ -32,39 +56,10 @@ const Cards = () => {
   const [displayPanel, setDisplayPanel] = useContext(DisplayPanelContext);
   const [selectedCard, setSelectedCard] = useContext(SelectedCardContext);
 
-
-  function rand() {
-    return Math.round(Math.random() * 20) - 10;
-  }
-  
-  function getModalStyle() {
-    const top = 50 + rand();
-    const left = 50 + rand();
-  
-    return {
-      top: `${top}%`,
-      left: `${left}%`,
-      transform: `translate(-${top}%, -${left}%)`,
-    };
-  }
-  
-  const useStyles = makeStyles((theme) => ({
-    paper: {
-      position: 'absolute',
-      width: 400,
-      backgroundColor: theme.palette.background.paper,
-      border: '2px solid #000',
-      boxShadow: theme.shadows[5],
-      padding: theme.spacing(2, 4, 3),
-    },
-  }));
-
-
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
-
 
   const handleOpen = () => {
     setOpen(true);
@@ -73,7 +68,13 @@ const Cards = () => {
   const handleClose = () => {
     setOpen(false);
   };
- 
+
+  const body = (
+    <div style={modalStyle} className={classes.paper}>
+
+      {displayPanel ? <Panel /> : null}
+    </div>
+  );
 
   const ID = function () {
     return "_" + Math.random().toString(36).substr(2, 9);
@@ -96,6 +97,7 @@ const Cards = () => {
 
   const displayCard = (id, title, labels, description, checklist) => {
     setDisplayPanel(true);
+    handleOpen();
     setSelectedCard({
       id: id,
       title: title,
@@ -120,6 +122,11 @@ const Cards = () => {
           </div>
         </div>
 
+        <Modal open={open} onClose={handleClose}>
+      
+          {body}
+        </Modal>
+
         {/* All the displayed card */}
         <div className="cards__wrapper">
           {cardElement?.map((element) => (
@@ -132,7 +139,6 @@ const Cards = () => {
               checklist={element.checklist}
               displayCard={displayCard}
               deleteCard={deleteCard}
-              onClick={handleOpen}
             />
           ))}
         </div>
