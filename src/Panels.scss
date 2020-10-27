@@ -23,6 +23,11 @@
   border-radius: 5px;
   position: relative;
   z-index: 51;
+
+  .panel__specification {
+    display: flex;
+    justify-content: start;
+  }
 }
 
 .panel__icon {

@@ -2,8 +2,12 @@ import React, { useContext, useState, useEffect } from "react";
 import "./SelectLabels.scss";
 import AddIcon from "@material-ui/icons/Add";
 import { SelectedCardContext } from "./CardElementProvider";
-
+import Chip from "@material-ui/core/Chip";
 import Label from "./Label";
+
+import { IconButton } from "@material-ui/core";
+import Typography from "@material-ui/core/Typography";
+import Box from "@material-ui/core/Box";
 
 const SelectLabels = () => {
   const [selectedCard, setSelectedCard] = useContext(SelectedCardContext);
@@ -53,7 +57,10 @@ const SelectLabels = () => {
       selectedCard.labels.push(colorLabel[id].color);
     } else {
       setColorLabel([...colorLabel], (colorLabel[id].activated = false));
-      selectedCard.labels.splice(selectedCard.labels.indexOf(colorLabel[id].color), 1);
+      selectedCard.labels.splice(
+        selectedCard.labels.indexOf(colorLabel[id].color),
+        1
+      );
     }
   };
 
@@ -70,30 +77,35 @@ const SelectLabels = () => {
 
   return (
     <div className="selectLabels">
-      <h4>Labels</h4>
+      <Typography >
+        <Box fontWeight="fontWeightLight" color="text.secondary" fontSize="fontSize">Labels</Box>
+      </Typography>
       <div className="selectLabels__labels">
         {selectedCard.labels.map((labels) => (
-          <div
+          <Chip
+            size={"medium"}
             key={labels + labels.length}
             className="selectLabels__label"
             style={{ backgroundColor: labels }}
-          ></div>
+          />
         ))}
 
         <div className="selectLabels__labelSelection">
-          <div
+          <IconButton
             className="selectLabels__addLabel"
             onClick={() => setDisplayLabels(!displayLabels)}
           >
             <AddIcon />
-          </div>
+          </IconButton>
 
           {/* Label list menu */}
+
           {displayLabels ? (
             <div className="selectLabels__labelList">
-              <h4>Labels</h4>
-              <hr />
-
+              <Typography variant="subtitle2">
+                <Box fontWeight="fontWeightBold">Labels</Box>
+              </Typography>
+              <hr/>
               {colorLabel.map((elem) => (
                 <Label
                   color={elem.color}

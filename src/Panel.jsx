@@ -1,9 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./Panels.scss";
 
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-
 import {
   CardElementContext,
   DisplayPanelContext,
@@ -11,13 +8,12 @@ import {
   ID,
 } from "./CardElementProvider";
 
-import ViewAgendaIcon from "@material-ui/icons/ViewAgenda";
 import ClearIcon from "@material-ui/icons/Clear";
-import SubjectIcon from "@material-ui/icons/Subject";
+
 import AddIcon from "@material-ui/icons/Add";
 import PlaylistAddCheckIcon from "@material-ui/icons/PlaylistAddCheck";
-import SelectLabels from "./SelectLabels";
-import Checklist from "./Checklist";
+import PanelLabels from "./PanelLabels";
+import ChecklistElement from "./ChecklistElement";
 import { Button, ButtonGroup, IconButton } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 
@@ -25,7 +21,11 @@ import { makeStyles } from "@material-ui/core/styles";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
+import Grid from '@material-ui/core/Grid';
 import PropTypes from "prop-types";
+import PanelDescription from "./PanelDescription";
+import PanelHeader from "./PanelHeader";
+import PanelDeadline from "./PanelDeadline";
 
 const Panel = () => {
   const [displayPanel, setDisplayPanel] = useContext(DisplayPanelContext);
@@ -41,7 +41,6 @@ const Panel = () => {
 
   //#region Get ID of the current selected card
   const [cardId, setCardId] = useState(null);
-
   useEffect(() => {
     for (let i = 0; i < cardElement.length; i++) {
       if (cardElement[i].id === selectedCard.id) {
@@ -52,14 +51,6 @@ const Panel = () => {
   }, [selectedCard]);
 
   //#endregion
-
-  const changeDescription = (e) => {
-    setCardElement([...cardElement], (cardElement[cardId].description = e));
-  };
-
-  const changeTitle = (e) => {
-    setCardElement([...cardElement], (cardElement[cardId].title = e));
-  };
 
   //#region Add todo element
   const addTodo = (e) => {
@@ -157,56 +148,27 @@ const Panel = () => {
 
         <div className="panel__form">
           {/* Header of the panel */}
-          <div className="panel__header">
-            <div className="panel__headerLeft">
-              <ViewAgendaIcon className="panel__icon"></ViewAgendaIcon>
-              <TextField
-                fullWidth={true}
-                size={"medium"}             
-                placeholder="Add title"
-                defaultValue={selectedCard.title}
-                onChange={(e) => changeTitle(e.target.value)}
-              />
-            </div>
-            <IconButton>
-              <ClearIcon
-                className="panel__close"
-                onClick={() => setDisplayPanel(false)}
-              />
-            </IconButton>
-          </div>
+          <PanelHeader cardId={cardId} />
 
           {/* Selected labels */}
 
-          <SelectLabels></SelectLabels>
+          <Grid container justify="space-between">
+            <PanelLabels />
+            <PanelDeadline />
+          </Grid>
 
           {/* Description */}
 
-          <div className="panel__description">
-            <div className="panel__descriptionHeader">
-              <SubjectIcon className="panel__icon"></SubjectIcon>
-              <Typography variant="h6">Description</Typography>
-            </div>
-
-            <TextField
-              className="panel__textDescription"
-              fullWidth={true}
-              label="Multiline"
-              variant="outlined"
-              multiline
-              rows={4}
-              label="Add a more detailed description"
-              defaultValue={selectedCard.description}
-              onChange={(e) => changeDescription(e.target.value)}
-            ></TextField>
-          </div>
+          <PanelDescription cardId={cardId} />
 
           {/* Checklist */}
 
           <div className="panel__toDo">
             <div className="panel__descriptionHeader">
               <PlaylistAddCheckIcon className="panel__icon"></PlaylistAddCheckIcon>
-              <Typography variant="h6">Checklist</Typography>
+              <Typography variant="h6">
+                <Box fontWeight="fontWeightBold">Checklist</Box>
+              </Typography>
             </div>
 
             {selectedCard.checklist.length == 0 ? null : (
@@ -217,7 +179,7 @@ const Panel = () => {
 
             {selectedCard.checklist
               ? selectedCard.checklist.map((element) => (
-                  <Checklist
+                  <ChecklistElement
                     title={element.title}
                     done={element.done}
                     key={element.id}
