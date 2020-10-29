@@ -9,9 +9,31 @@ import { IconButton } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 
+import { makeStyles } from "@material-ui/core/styles";
+
+import List from "@material-ui/core/List";
+
+import MenuItem from "@material-ui/core/MenuItem";
+import Menu from "@material-ui/core/Menu";
+
 const SelectLabels = () => {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [selectedIndex, setSelectedIndex] = React.useState(1);
+
+  const handleClickListItem = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuItemClick = (event, index) => {
+    setSelectedIndex(index);
+    // setAnchorEl(null);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   const [selectedCard, setSelectedCard] = useContext(SelectedCardContext);
-  const [displayLabels, setDisplayLabels] = useState(false);
 
   const [colorLabel, setColorLabel] = useState([
     {
@@ -52,10 +74,11 @@ const SelectLabels = () => {
   ]);
 
   const activateLabel = (id) => {
-    if (colorLabel[id].activated === false) {
+    if (colorLabel[id]?.activated === false) {
       setColorLabel([...colorLabel], (colorLabel[id].activated = true));
+        
       selectedCard.labels.push(colorLabel[id].color);
-    } else {
+    } else if (colorLabel[id]?.activated === true) {
       setColorLabel([...colorLabel], (colorLabel[id].activated = false));
       selectedCard.labels.splice(
         selectedCard.labels.indexOf(colorLabel[id].color),
@@ -77,48 +100,62 @@ const SelectLabels = () => {
 
   return (
     <div className="selectLabels">
-      <Typography >
-        <Box fontWeight="fontWeightLight" color="text.secondary" fontSize="fontSize">Labels</Box>
+      <Typography>
+        <Box
+          fontWeight="fontWeightLight"
+          color="text.secondary"
+          fontSize="fontSize"
+        >
+          Labels
+        </Box>
       </Typography>
-      <div className="selectLabels__labels">
-        {selectedCard.labels.map((labels) => (
-          <Chip
-            size={"medium"}
-            key={labels + labels.length}
-            className="selectLabels__label"
-            style={{ backgroundColor: labels }}
-          />
-        ))}
+      {selectedCard.labels.map((labels) => (
+        <Chip
+          size={"medium"}
+          key={labels + labels.length}
+          style={{ backgroundColor: labels }}
+          className="selectedLabels__label"
+        />
+      ))}
+      <IconButton
+        className="selectLabels__addLabel"
+        onClick={handleClickListItem}
+      >
+        <AddIcon />
+      </IconButton>
 
-        <div className="selectLabels__labelSelection">
-          <IconButton
-            className="selectLabels__addLabel"
-            onClick={() => setDisplayLabels(!displayLabels)}
+      <List component="nav" aria-label="Device settings"></List>
+      <Menu
+        id="lock-menu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+      >
+        {colorLabel.map((option, index) => (
+          <MenuItem
+            key={option}
+            // selected={index === selectedIndex}
+            onClick={(event) => {
+              handleMenuItemClick(event, index);
+              activateLabel(option.id);
+            }}
+            style={{
+              backgroundColor: option.color,
+              width: "120px",
+              height: "35px",
+              marginBottom: "5px",
+              position: "relative",
+              color: "white",
+            }}
           >
-            <AddIcon />
-          </IconButton>
-
-          {/* Label list menu */}
-
-          {displayLabels ? (
-            <div className="selectLabels__labelList">
-              <Typography variant="subtitle2">
-                <Box fontWeight="fontWeightBold">Labels</Box>
-              </Typography>
-              <hr/>
-              {colorLabel.map((elem) => (
-                <Label
-                  color={elem.color}
-                  activated={elem.activated}
-                  id={elem.id}
-                  key={elem.id}
-                  activatedCard={activateLabel}
-                ></Label>
-              ))}
-            </div>
-          ) : null}
-        </div>
-      </div>
+            <Label
+              activated={option.activated}
+              activatedCard={activateLabel}
+            ></Label>
+          </MenuItem>
+        ))}
+      </Menu>
     </div>
   );
 };

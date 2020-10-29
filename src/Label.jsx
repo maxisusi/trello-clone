@@ -5,7 +5,6 @@ import CheckIcon from "@material-ui/icons/Check";
 const Label = ({ color, activated, id, activatedCard }) => {
   return (
     <div
-      className="selectedLabels__labelInList"
       style={{ backgroundColor: color }}
       onClick={() => activatedCard(id)}
     >

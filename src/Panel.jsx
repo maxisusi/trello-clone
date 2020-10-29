@@ -4,7 +4,8 @@ import "./Panels.scss";
 import {
   CardElementContext,
   DisplayPanelContext,
-  SelectedCardContext,
+
+  CardIDContext,
   ID,
 } from "./CardElementProvider";
 
@@ -28,7 +29,6 @@ import PanelHeader from "./PanelHeader";
 import PanelDeadline from "./PanelDeadline";
 
 const Panel = () => {
-
   const [displayPanel, setDisplayPanel] = useContext(DisplayPanelContext);
   const [addChecklistMenu, setAddChecklistMenu] = useState(false);
   const [checkListInput, setCheckListInput] = useState("");
@@ -38,18 +38,9 @@ const Panel = () => {
   const [cardElement, setCardElement] = useContext(CardElementContext);
 
   //Current card selected
-  const [selectedCard, setSelectedCard] = useContext(SelectedCardContext);
+  const [cardId, setCardId] = useContext(CardIDContext);
 
-  //#region Get ID of the current selected card
-  const [cardId, setCardId] = useState(null);
-  useEffect(() => {
-    for (let i = 0; i < cardElement.length; i++) {
-      if (cardElement[i].id === selectedCard.id) {
-        setCardId(i);
-        return;
-      }
-    }
-  }, [selectedCard]);
+  console.log(cardId);
 
   //#endregion
 
@@ -66,7 +57,7 @@ const Panel = () => {
 
     setCardElement(
       [...cardElement],
-      cardElement[cardId].checklist.push(newTodo)
+      cardElement[cardId]?.checklist.push(newTodo)
     );
     setAddChecklistMenu(false);
   };
@@ -77,36 +68,38 @@ const Panel = () => {
   const handleChecklistChange = (checkElement, id) => {
     setCardElement(
       [...cardElement],
-      cardElement[cardId].checklist.map((element) =>
+      cardElement[cardId]?.checklist.map((element) =>
         element.id === id ? (element.done = !checkElement) : null
       )
     );
   };
 
   const deleteChecklistElement = (id) => {
-    const indexOfId = [...selectedCard.checklist].findIndex(
+    const indexOfId = [...cardElement[cardId].checklist].findIndex(
       (obj) => obj.id === id
     );
 
     setCardElement(
       [...cardElement],
-      cardElement[cardId].checklist.splice(indexOfId, 1)
+      cardElement[cardId]?.checklist.splice(indexOfId, 1)
     );
   };
 
   // get the percentage of remaining checklist
   useEffect(() => {
-    if (selectedCard.checklist) {
-      const totalChecklist = selectedCard.checklist.length;
+    if (cardElement[cardId]?.checklist) {
+      const totalChecklist = cardElement[cardId].checklist.length;
       let checkedCount = 0;
 
-      const getCheckedCount = selectedCard.checklist.forEach((element) => {
-        if (element.done === true) checkedCount += 1;
-      });
+      const getCheckedCount = cardElement[cardId].checklist.forEach(
+        (element) => {
+          if (element.done === true) checkedCount += 1;
+        }
+      );
 
       setRemainingChecklist(((checkedCount / totalChecklist) * 100).toFixed());
     } else return;
-  }, [selectedCard, cardElement]);
+  }, [cardId, cardElement]);
 
   //#endregion
 
@@ -141,7 +134,6 @@ const Panel = () => {
 
   return (
     <div className="panel">
-      
       <div className="panel__form">
         {/* Header of the panel */}
         <PanelHeader cardId={cardId} />
@@ -150,7 +142,7 @@ const Panel = () => {
 
         <Grid container justify="space-between">
           <PanelLabels />
-          <PanelDeadline />
+          {/* <PanelDeadline /> */}
         </Grid>
 
         {/* Description */}
@@ -167,14 +159,14 @@ const Panel = () => {
             </Typography>
           </div>
 
-          {selectedCard?.checklist.length == 0 ? null : (
+          {cardElement[cardId]?.checklist.length == 0 ? null : (
             <LinearProgressWithLabel value={remainingChecklist} />
           )}
 
           {/* Display checklist point */}
 
-          {selectedCard?.checklist
-            ? selectedCard.checklist.map((element) => (
+          {cardElement[cardId]?.checklist
+            ? cardElement[cardId].checklist.map((element) => (
                 <ChecklistElement
                   title={element.title}
                   done={element.done}

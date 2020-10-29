@@ -6,7 +6,7 @@ import CardContent from "@material-ui/core/CardContent";
 
 import CreateIcon from "@material-ui/icons/Create";
 import { IconButton } from "@material-ui/core";
-import Grid from '@material-ui/core/Grid';
+import Grid from "@material-ui/core/Grid";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Fade from "@material-ui/core/Fade";
@@ -57,7 +57,7 @@ const CardsElement = ({
   useEffect(() => {
     if (checklistRemainingElement == checklist.length)
       setCardCompleted("completed");
-
+    else setCardCompleted("uncompleted");
   }, [cardElement]);
 
   //Main card elements
@@ -77,8 +77,12 @@ const CardsElement = ({
           ))}
         </div>
         {checklist.length == 0 ? (
-          <Grid container justify="space-between" className="cards__downElements" mx={20}>
-            
+          <Grid
+            container
+            justify="space-between"
+            className="cards__downElements"
+            mx={20}
+          >
             <Typography color="page">{title}</Typography>
             <IconButton
               size={"small"}
@@ -89,12 +93,15 @@ const CardsElement = ({
             >
               <CreateIcon fontSize={"small"} />
             </IconButton>
-            
           </Grid>
         ) : (
           <>
             <Typography color="page">{title}</Typography>
-            <Grid container justify="space-between" className="cards__downElements">
+            <Grid
+              container
+              justify="space-between"
+              className="cards__downElements"
+            >
               <Chip
                 label={`${checklistRemainingElement}/${checklist.length}`}
                 className={"cards__chip " + cardCompleted}

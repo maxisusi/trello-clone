@@ -1,12 +1,13 @@
 import { datePickerDefaultProps } from "@material-ui/pickers/constants/prop-types";
 import { render } from "@testing-library/react";
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useEffect } from "react";
 import Cards from "./Cards";
 import Panel from "./Panel";
 
 export const CardElementContext = createContext();
 export const DisplayPanelContext = createContext();
 export const SelectedCardContext = createContext();
+export const CardIDContext = createContext();
 
 export const ID = function () {
   return "_" + Math.random().toString(36).substr(2, 9);
@@ -16,13 +17,19 @@ export const CardElementProvider = () => {
   const [displayPanel, setDisplayPanel] = useState(false);
   const [selectedCard, setSelectedCard] = useState({
     id: "",
-    title: "",
-    labels: null,
-    description: "",
-    checklist: null,
   });
 
-
+  //#region Get ID of the current selected card
+  const [cardId, setCardId] = useState(null);
+  useEffect(() => {
+    for (let i = 0; i < cardElement.length; i++) {
+      if (cardElement[i].id === selectedCard.id) {
+        console.log(i);
+        setCardId(i);
+        return;
+      }
+    }
+  }, [selectedCard]);
 
   const [cardElement, setCardElement] = useState([
     {
@@ -48,7 +55,6 @@ export const CardElementProvider = () => {
           done: true,
         },
       ],
-
     },
     {
       id: ID(),
@@ -98,8 +104,9 @@ export const CardElementProvider = () => {
     <CardElementContext.Provider value={[cardElement, setCardElement]}>
       <DisplayPanelContext.Provider value={[displayPanel, setDisplayPanel]}>
         <SelectedCardContext.Provider value={[selectedCard, setSelectedCard]}>
-
-          <Cards />
+          <CardIDContext.Provider value={[cardId, setCardId]}>
+            <Cards />
+          </CardIDContext.Provider>
         </SelectedCardContext.Provider>
       </DisplayPanelContext.Provider>
     </CardElementContext.Provider>

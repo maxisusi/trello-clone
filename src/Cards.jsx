@@ -21,14 +21,11 @@ import DeleteIcon from "@material-ui/icons/Delete";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
-import Panel from './Panel';
-
-
-
+import Panel from "./Panel";
 
 function getModalStyle() {
-  const top = 50 
-  const left = 50
+  const top = 50;
+  const left = 50;
 
   return {
     top: `${top}%`,
@@ -40,10 +37,9 @@ function getModalStyle() {
 const useStyles = makeStyles((theme) => ({
   paper: {
     position: "absolute",
-    outline: 'none',
+    outline: "none",
     border: "2px",
     boxShadow: theme.shadows[5],
-   
   },
 }));
 
@@ -71,7 +67,6 @@ const Cards = () => {
 
   const body = (
     <div style={modalStyle} className={classes.paper}>
-
       {displayPanel ? <Panel /> : null}
     </div>
   );
@@ -123,7 +118,6 @@ const Cards = () => {
         </div>
 
         <Modal open={open} onClose={handleClose}>
-      
           {body}
         </Modal>
 
