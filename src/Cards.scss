@@ -1,90 +1,75 @@
-@import './App.scss';
+@import "./App.scss";
 
 .cards {
   background-color: #ebecf0 !important;
-  max-width: 350px;
+  max-width: 290px;
   min-height: 180px;
   position: relative;
   z-index: 50;
 
   .cards__header {
-    display: flex;
-    align-content: center;
-    justify-content: space-between;
-    margin-bottom: 20px;
-
+    padding: 0.1em 0.5em 0.7em 0.5em;
     .cards__title {
       background-color: #ebecf0;
       border: none;
       font-weight: bold;
-      width: 85%;
-      font-size: 1.1em;
+      flex-grow: 1;
+      font-size: 0.98em;
       &:focus {
         background-color: white;
       }
     }
   }
 
+  .cards__element {
+    position: relative;
+    margin-bottom: 7px;
+    z-index: 5;
 
+    .cards__downElements {
+      min-height: 30px;
+      align-items: center;
 
-    .cards__element {
-
-      position: relative;
-      cursor: pointer;
-      margin-bottom: 20px; 
-      z-index: 5;
-
-      .cards__downElements {
-        margin-top: 15px;
-        min-height: 30px;
-        
-        .uncompleted {
-          background-color: #E0E0E0 !important;
-        }
-        .completed {
-          background-color: $greenValidation !important;
-        }
+      .uncompleted {
+        background-color: #bdbdbd !important;
       }
-
-      .cards__labels {
-        display: flex;
-        flex-wrap: wrap;
-        width: 90%;
-        margin-bottom: 10px;
-
-        .cards__label {
-          width: 40px;
-          margin-bottom: 5px;
-          margin-right: 3px;
-          height: 8px;
-          border-radius: 10px;
-        }
+      .completed {
+        background-color: $greenValidation !important;
       }
+    }
 
+    .withElements {
+      margin-top: 5px;
+    }
+
+    .cards__labels {
+      display: flex;
+      flex-wrap: wrap;
+
+      .cards__label {
+        width: 35px;
+        margin-bottom: 5px;
+        margin-right: 3px;
+        height: 8px;
+        border-radius: 10px;
+      }
+    }
+
+    .cards__pen {
+      display: none;
+    }
+    &:hover {
       .cards__pen {
-        display: none;
+        display: block;
 
-      }
-      &:hover {
-        .cards__pen {
-  
-          display: block;
-
-          &:hover {
-            background-color: #c9cacb;
-          }
+        &:hover {
+          background-color: #c9cacb;
         }
       }
     }
   }
+}
 
-
-
-
-  
-
-  .cards__textInput {
-    margin-bottom: 20px !important;
-  }
-
-
+.cards__textInput {
+  margin-bottom: 20px !important;
+}

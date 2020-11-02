@@ -11,6 +11,7 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Fade from "@material-ui/core/Fade";
 import Chip from "@material-ui/core/Chip";
+import Box from '@material-ui/core/Box';
 import LibraryAddCheckIcon from "@material-ui/icons/LibraryAddCheck";
 
 import { CardElementContext } from "./CardElementProvider";
@@ -28,7 +29,8 @@ const CardsElement = ({
   provided,
 }) => {
   const [cardElement, setCardElement] = useContext(CardElementContext);
-  const [cardCompleted, setCardCompleted] = useState("uncompleted");
+  const [cardCompleted, setCardCompleted] = useState("default");
+
   //#region MaterialUI menu
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [onHover, setOnHover] = useState(null);
@@ -58,8 +60,8 @@ const CardsElement = ({
 
   useEffect(() => {
     if (checklistRemainingElement == checklist.length)
-      setCardCompleted("completed");
-    else setCardCompleted("uncompleted");
+      setCardCompleted("primary");
+    else setCardCompleted("default");
   }, [cardElement]);
 
   //Main card elements
@@ -67,31 +69,34 @@ const CardsElement = ({
   return (
     <Card
       className="cards__element"
+
       onClick={openMenu}
       ref={innerRef}
       {...provided.draggableProps}
       {...provided.dragHandleProps}
     >
-      <CardContent>
-        <div className="cards__labels">
-          {labels?.map((colors) => (
-            <div>
-              <div
-                key={id + colors}
-                className="cards__label"
-                style={{ backgroundColor: colors }}
-              ></div>
-            </div>
-          ))}
-        </div>
+      <CardContent style={{ padding: "0.5em 1em 0.5em 1em",}}>
+        {labels ? (
+          <div className="cards__labels">
+            {labels?.map((colors) => (
+              <div>
+                <div
+                  key={id + colors}
+                  className="cards__label"
+                  style={{ backgroundColor: colors }}
+                ></div>
+              </div>
+            ))}
+          </div>
+        ) : null}
+
         {checklist.length == 0 ? (
           <Grid
             container
             justify="space-between"
             className="cards__downElements"
-            mx={20}
           >
-            <Typography color="page">{title}</Typography>
+            <Typography ><Box fontSize={14.3}>{title}</Box></Typography>
             <IconButton
               size={"small"}
               className="cards__pen"
@@ -104,16 +109,17 @@ const CardsElement = ({
           </Grid>
         ) : (
           <>
-            <Typography color="page">{title}</Typography>
+            <Typography ><Box fontSize={14.3}>{title}</Box></Typography>
             <Grid
               container
               justify="space-between"
-              className="cards__downElements"
+              className="cards__downElements withElements"
             >
               <Chip
                 label={`${checklistRemainingElement}/${checklist.length}`}
-                className={"cards__chip " + cardCompleted}
-                color="primary"
+                style={{borderColor: "white"}}
+                variant="outlined"
+                color={cardCompleted}
                 icon={<LibraryAddCheckIcon />}
                 size="small"
               />

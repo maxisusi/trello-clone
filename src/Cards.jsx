@@ -5,6 +5,7 @@ import CardsElement from "./CardsElement";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import TextField from "@material-ui/core/TextField";
+import Grid from "@material-ui/core/Grid";
 
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
@@ -82,7 +83,7 @@ const Cards = () => {
     const addTo = {
       id: ID(),
       title: cardInput,
-      labels: ["#334663"],
+      labels: [],
       description: "",
       checklist: [],
     };
@@ -119,13 +120,13 @@ const Cards = () => {
 
   return (
     <Card className="cards" variant="outlined">
-      <CardContent>
-        <div className="cards__header">
+      <CardContent style={{ padding: "0.5em" }}>
+        <Grid container justify="space-between" className="cards__header">
           <input className="cards__title" defaultValue={cardTitle}></input>
           <div className="cards__moreButton">
             <MoreHorizIcon />
           </div>
-        </div>
+        </Grid>
 
         <Modal open={open} onClose={handleClose}>
           {body}
