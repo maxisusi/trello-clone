@@ -15,7 +15,6 @@ import {
   SelectedCardContext,
 } from "./CardElementProvider";
 
-import IconButton from "@material-ui/core/IconButton";
 import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
@@ -34,6 +33,11 @@ function getModalStyle() {
     top: `${top}%`,
     left: `${left}%`,
     transform: `translate(-${top}%, -${left}%)`,
+    overflow:'scroll',
+    height:'100%',
+    display:'block'
+    
+
   };
 }
 
@@ -55,8 +59,8 @@ const Cards = () => {
   const [displayPanel, setDisplayPanel] = useContext(DisplayPanelContext);
   const [selectedCard, setSelectedCard] = useContext(SelectedCardContext);
 
+
   const classes = useStyles();
-  // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
 

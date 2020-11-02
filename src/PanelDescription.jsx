@@ -2,9 +2,6 @@ import React, { useContext } from "react";
 
 import {
   CardElementContext,
-  DisplayPanelContext,
-  SelectedCardContext,
-  ID,
 } from "./CardElementProvider";
 
 import { Typography } from "@material-ui/core";
@@ -17,9 +14,6 @@ const PanelDescription = ({ cardId }) => {
   const changeDescription = (e) => {
     setCardElement([...cardElement], (cardElement[cardId].description = e));
   };
-
-  //Current card selected
-  const [selectedCard, setSelectedCard] = useContext(SelectedCardContext);
 
   //Main card elements
   const [cardElement, setCardElement] = useContext(CardElementContext);
@@ -38,7 +32,7 @@ const PanelDescription = ({ cardId }) => {
         multiline
         rows={4}
         label="Add a more detailed description"
-        defaultValue={selectedCard.description}
+        defaultValue={cardElement[cardId].description}
         onChange={(e) => changeDescription(e.target.value)}
       ></TextField>
     </div>
