@@ -24,6 +24,8 @@ const CardsElement = ({
   checklist,
   description,
   deleteCard,
+  innerRef,
+  provided,
 }) => {
   const [cardElement, setCardElement] = useContext(CardElementContext);
   const [cardCompleted, setCardCompleted] = useState("uncompleted");
@@ -63,7 +65,13 @@ const CardsElement = ({
   //Main card elements
 
   return (
-    <Card className="cards__element" onClick={openMenu}>
+    <Card
+      className="cards__element"
+      onClick={openMenu}
+      ref={innerRef}
+      {...provided.draggableProps}
+      {...provided.dragHandleProps}
+    >
       <CardContent>
         <div className="cards__labels">
           {labels?.map((colors) => (

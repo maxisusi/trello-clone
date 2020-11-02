@@ -6,6 +6,8 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import TextField from "@material-ui/core/TextField";
 
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+
 import {
   CardElementContext,
   DisplayPanelContext,
@@ -107,6 +109,14 @@ const Cards = () => {
     setCardElement(cardElement.filter((item) => item.id !== id));
   };
 
+  const handleOnDragEnd = (result) => {
+    const items = Array.from(cardElement);
+    const [reordoredItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination?.index, 0, reordoredItem);
+
+    setCardElement(items);
+  };
+
   return (
     <Card className="cards" variant="outlined">
       <CardContent>
@@ -122,20 +132,42 @@ const Cards = () => {
         </Modal>
 
         {/* All the displayed card */}
-        <div className="cards__wrapper">
-          {cardElement?.map((element) => (
-            <CardsElement
-              key={element.id}
-              id={element.id}
-              title={element.title}
-              labels={element.labels}
-              description={element.description}
-              checklist={element.checklist}
-              displayCard={displayCard}
-              deleteCard={deleteCard}
-            />
-          ))}
-        </div>
+
+        <DragDropContext onDragEnd={handleOnDragEnd}>
+          <Droppable droppableId="cards">
+            {(provided) => (
+              <div
+                className="cards__wrapper"
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+              >
+                {cardElement?.map((element, index) => (
+                  <Draggable
+                    key={element.id}
+                    draggableId={element.id}
+                    index={index}
+                  >
+                    {(provided) => (
+                      <CardsElement
+                        provided={provided}
+                        innerRef={provided.innerRef}
+                        id={element.id}
+                        title={element.title}
+                        labels={element.labels}
+                        description={element.description}
+                        checklist={element.checklist}
+                        displayCard={displayCard}
+                        deleteCard={deleteCard}
+                      />
+                    )}
+                  </Draggable>
+                ))}
+
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
 
         {/* Create card module */}
 
